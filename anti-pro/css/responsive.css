@@ -1,0 +1,270 @@
+/* ═══════════════════════════════════════════════════════
+   WealthWise — Responsive Design
+   responsive.css
+═══════════════════════════════════════════════════════ */
+
+/* ── Large Desktop ── */
+@media (min-width: 1400px) {
+  .page-container {
+    padding: var(--space-8);
+  }
+}
+
+/* ── Desktop ── */
+@media (min-width: 1024px) {
+  .sidebar-close { display: none; }
+}
+
+/* ── Tablet ── */
+@media (max-width: 1023px) {
+  :root {
+    --sidebar-width: 260px;
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+    z-index: 600;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .sidebar-close { display: flex; }
+
+  .sidebar-overlay.open { display: block; }
+
+  .main-content {
+    margin-left: 0;
+  }
+
+  .menu-btn {
+    display: flex;
+  }
+
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-1-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-2-1 {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-hero {
+    display: none;
+  }
+
+  .auth-panel {
+    width: 100%;
+    min-height: 100vh;
+    padding: var(--space-6);
+  }
+
+  .auth-card {
+    max-width: 460px;
+  }
+}
+
+/* ── Mobile Large (≤768px) ── */
+@media (max-width: 768px) {
+  .page-container {
+    padding: var(--space-4);
+  }
+
+  .topbar {
+    padding: 0 var(--space-4);
+  }
+
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .page-header .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+
+  .auth-hero-title {
+    font-size: 2rem;
+  }
+
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-bar > * {
+    width: 100%;
+  }
+
+  .topbar-breadcrumb {
+    font-size: 1rem;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .data-table th:nth-child(3),
+  .data-table td:nth-child(3) {
+    display: none;
+  }
+
+  .txn-date { display: none; }
+
+  .fab { display: flex; }
+
+  .modal {
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    max-height: 90vh;
+  }
+
+  .modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  @keyframes modal-in {
+    from { opacity: 0; transform: translateY(60px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* ── Mobile Small (≤480px) ── */
+@media (max-width: 480px) {
+  :root {
+    --topbar-height: 60px;
+  }
+
+  .page-container {
+    padding: var(--space-3);
+  }
+
+  .grid-4 {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+
+  .stat-card {
+    padding: var(--space-4);
+  }
+
+  .stat-value {
+    font-size: 1.375rem;
+  }
+
+  .card-body {
+    padding: var(--space-4);
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-1);
+  }
+
+  .cat-pill {
+    padding: var(--space-2) var(--space-1);
+  }
+
+  .cat-pill-label {
+    font-size: 0.6875rem;
+  }
+
+  .modal-body {
+    padding: var(--space-4);
+  }
+
+  .auth-card {
+    padding: 0;
+  }
+
+  .toast-container {
+    left: var(--space-3);
+    right: var(--space-3);
+    top: var(--space-3);
+  }
+
+  .toast {
+    min-width: unset;
+    width: 100%;
+  }
+}
+
+/* ── Print Styles ── */
+@media print {
+  .sidebar,
+  .topbar,
+  .fab,
+  .toast-container,
+  .modal-overlay {
+    display: none !important;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+  }
+
+  .page-container {
+    padding: 0 !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+
+  .card, .stat-card, .goal-card {
+    box-shadow: none;
+    border: 1px solid #ddd;
+    break-inside: avoid;
+  }
+}
+
+/* ── High Contrast ── */
+@media (prefers-contrast: high) {
+  :root {
+    --border-color: #666;
+    --text-muted: #555;
+  }
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Personal Savings Tracker — AI-powered finance app to track income, expenses, and savings goals with smart insights." />
+  <title>WealthWise — Personal Savings Tracker</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+  <!-- ══════════════ LOADING SCREEN ══════════════ -->
+  <div id="loading-screen" class="loading-screen">
+    <div class="loading-content">
+      <div class="loading-logo">
+        <div class="logo-icon-lg">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="24" fill="url(#lg1)"/>
+            <path d="M14 28C14 22 18 16 24 16C30 16 34 20 34 26C34 30 31 33 27 34L24 32L21 34C17 33 14 31 14 28Z" fill="white" opacity="0.9"/>
+            <path d="M20 24L23 27L28 21" stroke="#1a56db" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs>
+              <linearGradient id="lg1" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#1a56db"/>
+                <stop offset="1" stop-color="#0e9f6e"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="loading-brand">WealthWise</span>
+      </div>
+      <div class="loading-spinner"></div>
+      <p class="loading-tagline">Smart savings for a better future</p>
+    </div>
+  </div>
+
+  <!-- ══════════════ AUTH SECTION ══════════════ -->
+  <div id="auth-section" class="auth-section hidden">
+    <div class="auth-hero">
+      <div class="auth-hero-content">
+        <div class="auth-logo">
+          <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="24" fill="url(#lg2)"/>
+            <path d="M14 28C14 22 18 16 24 16C30 16 34 20 34 26C34 30 31 33 27 34L24 32L21 34C17 33 14 31 14 28Z" fill="white" opacity="0.9"/>
+            <path d="M20 24L23 27L28 21" stroke="#1a56db" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs>
+              <linearGradient id="lg2" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#1a56db"/>
+                <stop offset="1" stop-color="#0e9f6e"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <span>WealthWise</span>
+        </div>
+        <h1 class="auth-hero-title">Take Control of Your <span class="gradient-text">Financial Future</span></h1>
+        <p class="auth-hero-desc">AI-powered savings tracker with smart insights, goal tracking, and spending analysis — all in one beautiful app.</p>
+        <div class="auth-features">
+          <div class="auth-feature-item">
+            <span class="auth-feature-icon">📊</span>
+            <span>Real-time analytics</span>
+          </div>
+          <div class="auth-feature-item">
+            <span class="auth-feature-icon">🤖</span>
+            <span>AI-powered insights</span>
+          </div>
+          <div class="auth-feature-item">
+            <span class="auth-feature-icon">🎯</span>
+            <span>Smart goal tracking</span>
+          </div>
+          <div class="auth-feature-item">
+            <span class="auth-feature-icon">📄</span>
+            <span>PDF report export</span>
+          </div>
+        </div>
+        <div class="auth-stats">
+          <div class="auth-stat"><span class="auth-stat-num">50K+</span><span>Users</span></div>
+          <div class="auth-stat"><span class="auth-stat-num">₹2Cr+</span><span>Tracked</span></div>
+          <div class="auth-stat"><span class="auth-stat-num">4.9★</span><span>Rating</span></div>
+        </div>
+      </div>
+      <div class="auth-hero-bg">
+        <div class="hero-blob blob-1"></div>
+        <div class="hero-blob blob-2"></div>
+        <div class="hero-blob blob-3"></div>
+      </div>
+    </div>
+
+    <div class="auth-panel">
+      <div class="auth-card">
+        <!-- Tabs -->
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="tab-login" onclick="Auth.switchTab('login')">Sign In</button>
+          <button class="auth-tab" id="tab-register" onclick="Auth.switchTab('register')">Sign Up</button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="login-form" class="auth-form" onsubmit="Auth.handleLogin(event)">
+          <h2 class="auth-form-title">Welcome back! 👋</h2>
+          <p class="auth-form-subtitle">Sign in to your account</p>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <div class="input-wrapper">
+              <span class="input-icon">✉️</span>
+              <input type="email" id="login-email" class="form-input" placeholder="you@example.com" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <div class="input-wrapper">
+              <span class="input-icon">🔒</span>
+              <input type="password" id="login-password" class="form-input" placeholder="Enter password" required />
+              <button type="button" class="input-toggle" onclick="Auth.togglePassword('login-password', this)">👁️</button>
+            </div>
+          </div>
+          <div id="login-error" class="form-error hidden"></div>
+          <button type="submit" class="btn btn-primary btn-full" id="login-btn">
+            <span>Sign In</span>
+            <span class="btn-arrow">→</span>
+          </button>
+          <div class="auth-divider"><span>or</span></div>
+          <button type="button" class="btn btn-demo btn-full" onclick="Auth.demoLogin()">
+            🚀 Try Demo Account
+          </button>
+        </form>
+
+        <!-- Register Form -->
+        <form id="register-form" class="auth-form hidden" onsubmit="Auth.handleRegister(event)">
+          <h2 class="auth-form-title">Create account ✨</h2>
+          <p class="auth-form-subtitle">Start your savings journey today</p>
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <div class="input-wrapper">
+              <span class="input-icon">👤</span>
+              <input type="text" id="reg-name" class="form-input" placeholder="Your full name" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <div class="input-wrapper">
+              <span class="input-icon">✉️</span>
+              <input type="email" id="reg-email" class="form-input" placeholder="you@example.com" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <div class="input-wrapper">
+              <span class="input-icon">🔒</span>
+              <input type="password" id="reg-password" class="form-input" placeholder="Min 6 characters" required minlength="6" />
+              <button type="button" class="input-toggle" onclick="Auth.togglePassword('reg-password', this)">👁️</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirm Password</label>
+            <div class="input-wrapper">
+              <span class="input-icon">🔒</span>
+              <input type="password" id="reg-confirm" class="form-input" placeholder="Repeat password" required />
+            </div>
+          </div>
+          <div id="register-error" class="form-error hidden"></div>
+          <button type="submit" class="btn btn-primary btn-full" id="register-btn">
+            <span>Create Account</span>
+            <span class="btn-arrow">→</span>
+          </button>
+          <div class="auth-divider"><span>or</span></div>
+          <button type="button" class="btn btn-demo btn-full" onclick="Auth.demoLogin()">
+            🚀 Try Demo Account
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ MAIN APP ══════════════ -->
+  <div id="app-section" class="app-layout hidden">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="24" fill="url(#lg3)"/>
+            <path d="M14 28C14 22 18 16 24 16C30 16 34 20 34 26C34 30 31 33 27 34L24 32L21 34C17 33 14 31 14 28Z" fill="white" opacity="0.9"/>
+            <path d="M20 24L23 27L28 21" stroke="#1a56db" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs>
+              <linearGradient id="lg3" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#1a56db"/>
+                <stop offset="1" stop-color="#0e9f6e"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <span class="sidebar-brand">WealthWise</span>
+        </div>
+        <button class="sidebar-close" id="sidebar-close" onclick="App.closeSidebar()">✕</button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#dashboard" class="nav-item" data-page="dashboard" id="nav-dashboard">
+          <span class="nav-icon">📊</span>
+          <span class="nav-label">Dashboard</span>
+          <span class="nav-indicator"></span>
+        </a>
+        <a href="#transactions" class="nav-item" data-page="transactions" id="nav-transactions">
+          <span class="nav-icon">💳</span>
+          <span class="nav-label">Transactions</span>
+          <span class="nav-indicator"></span>
+        </a>
+        <a href="#goals" class="nav-item" data-page="goals" id="nav-goals">
+          <span class="nav-icon">🎯</span>
+          <span class="nav-label">Savings Goals</span>
+          <span class="nav-indicator"></span>
+        </a>
+        <a href="#reports" class="nav-item" data-page="reports" id="nav-reports">
+          <span class="nav-icon">📈</span>
+          <span class="nav-label">Reports & AI</span>
+          <span class="nav-indicator"></span>
+        </a>
+        <a href="#settings" class="nav-item" data-page="settings" id="nav-settings">
+          <span class="nav-icon">⚙️</span>
+          <span class="nav-label">Settings</span>
+          <span class="nav-indicator"></span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user" id="sidebar-user">
+          <div class="user-avatar-sm" id="sidebar-avatar">U</div>
+          <div class="user-info">
+            <span class="user-name-sm" id="sidebar-username">User</span>
+            <span class="user-email-sm" id="sidebar-email">user@email.com</span>
+          </div>
+        </div>
+        <button class="btn-logout" onclick="Auth.logout()" title="Logout">
+          <span>🚪</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Sidebar Overlay (mobile) -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="App.closeSidebar()"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="menu-btn" id="menu-btn" onclick="App.openSidebar()">
+            <span></span><span></span><span></span>
+          </button>
+          <div class="topbar-breadcrumb" id="topbar-breadcrumb">Dashboard</div>
+        </div>
+        <div class="topbar-right">
+          <button class="topbar-btn" id="theme-toggle-btn" onclick="Settings.toggleTheme()" title="Toggle theme">
+            <span id="theme-icon">🌙</span>
+          </button>
+          <button class="topbar-btn" id="notif-btn" title="Notifications">
+            <span>🔔</span>
+            <span class="notif-dot hidden" id="notif-dot"></span>
+          </button>
+          <div class="topbar-avatar" id="topbar-avatar" onclick="App.navigate('settings')">U</div>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <div class="page-container" id="page-container">
+        <!-- Pages rendered here by JS -->
+      </div>
+    </main>
+  </div>
+
+  <!-- ══════════════ MODAL ══════════════ -->
+  <div class="modal-overlay hidden" id="modal-overlay" onclick="App.closeModal(event)">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Modal</h3>
+        <button class="modal-close" onclick="App.closeModal()">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════ TOAST ══════════════ -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- ══════════════ SCRIPTS ══════════════ -->
+  <script src="js/store.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/transactions.js"></script>
+  <script src="js/goals.js"></script>
+  <script src="js/reports.js"></script>
+  <script src="js/pdf.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

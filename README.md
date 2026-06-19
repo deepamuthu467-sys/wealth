@@ -232,7 +232,8 @@ Add application screenshots here after project completion.
 
 ## 👨‍💻 Author
 
-Developed as a Personal Finance Management Solution to help users monitor expenses, achieve savings goals, and make smarter financial decisions.
+Deepa Lakshmi M
+B.E. Computer Science and Engineering
 
 ---
 

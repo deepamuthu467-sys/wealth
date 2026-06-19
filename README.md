@@ -224,12 +224,6 @@ This project is suitable for:
 
 ---
 
-## 📸 Screenshots
-
-Add application screenshots here after project completion.
-
----
-
 ## 👨‍💻 Author
 
 Deepa Lakshmi M . B.E. Computer Science and Engineering
